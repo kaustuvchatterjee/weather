@@ -14,7 +14,8 @@ import numpy as np
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from skimage import io
-import cv2
+from skimage.color import rgb2gray
+from skimage.transform import resize
 
 def read_data_thingspeak():
     URL = 'https://api.thingspeak.com/channels/1097511/feeds.json?api_key='
@@ -141,15 +142,6 @@ fig2.update_layout(legend=dict(
 ))
 
 # Doppler Radar Plot
-def read_webimage(url, readFlag=cv2.IMREAD_COLOR):
-    
-    resp = urlopen(url)
-    image = np.asarray(bytearray(resp.read()), dtype="uint8")
-    image = cv2.imdecode(image, readFlag)
-
-    # return the image
-    return image
-
 url = 'https://mausam.imd.gov.in/Radar/caz_mum.gif'
 img1 = io.imread(url)
 # print(np.shape(img1))
@@ -170,12 +162,8 @@ x2=int(np.ceil(s[0]/1.82));
 # print(x1,x2,y1,y2)
 
 img2 = img2[x1:x2,y1:y2,:]
-img2_gray = cv2.cvtColor(img2,cv2.COLOR_BGR2GRAY)
-img2_gray = cv2.resize(img2_gray,(np.shape(img1)[0],np.shape(img1)[1]),interpolation=cv2.INTER_CUBIC)
-
-
-rad = img1
-sat = img2
+img2_gray = rgb2gray(img2)
+img2_gray = resize(img2_gray,(np.shape(img1)[0],np.shape(img1)[1]),anti_aliasing=True)
 
 # print(np.shape(img2_gray))
 m = np.min(img2_gray[:])
@@ -185,8 +173,8 @@ normA = normA / 255;
 
 fig3, ax = plt.subplots(figsize=[15,15])
 ax.set(xticks=[], yticks=[], title="Mumbai Doppler radar Image Overlayed with Satellite Image")
-plt.imshow(rad)
-plt.imshow(normA, cmap='gray', alpha=normA)
+plt.imshow(img1)
+plt.imshow(img2_gray, cmap='gray', alpha=img2_gray)
 
 
 # Streamlit
