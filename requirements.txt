@@ -1,6 +1,5 @@
 scikit_image==0.18.1
 numpy==1.19.4
-opencv_python==4.5.1.48
 matplotlib==3.3.4
 streamlit==0.77.0
 plotly==4.14.3
