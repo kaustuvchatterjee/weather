@@ -5,4 +5,3 @@ matplotlib==3.3.4
 streamlit==0.77.0
 plotly==4.14.3
 requests==2.24.0
-skimage==0.0
