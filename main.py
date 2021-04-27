@@ -179,8 +179,6 @@ plt.imshow(img2_gray, cmap='gray', alpha=img2_gray)
 
 # Streamlit
 
-st.title('Weather at Colaba')
-
 st.plotly_chart(fig1)
 
 st.plotly_chart(fig2)
