@@ -177,7 +177,7 @@ img2_gray = cv2.resize(img2_gray,(np.shape(img1)[0],np.shape(img1)[1]),interpola
 rad = img1
 sat = img2
 
-print(np.shape(img2_gray))
+# print(np.shape(img2_gray))
 m = np.min(img2_gray[:])
 normA = img2_gray - m
 # normA = np.float(normA);
