@@ -120,7 +120,7 @@ fig2.add_trace(go.Scatter(x=t,y=relHum, mode="lines", name="Rel Humidity",line={
                secondary_y=True)
 
 fig2.update_layout(title_text = 'Precipitation & Relative Humidity',
-                xaxis_title='$Date$',
+                xaxis_title='Date',
                 width = 740, height=480,
                 margin=dict(r=20, b=10, l=10, t=30),
                 showlegend = True,
