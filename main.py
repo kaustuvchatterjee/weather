@@ -162,9 +162,31 @@ x2=int(np.ceil(s[0]/1.82));
 # print(x1,x2,y1,y2)
 
 img2 = img2[x1:x2,y1:y2,:]
+###
+img_hsv = rgb2hsv(img2)
+h = img_hsv[:,:,0] #Hue
+s = img_hsv[:,:,1] #Sat
+v = img_hsv[:,:,2] #Val
+
+mask = ((h>0.0)&(h<0.2)&(s>0.29)&(s<=1))
+masked = np.where(mask[...,None], img2, 0)
+
+result = img2.copy()
+result[mask>0]=(0,0,0)
+img2_gray = rgb2gray(result)
+
+kernel = kernel = np.ones((20, 20), np.uint8)
+mask2 = dilation(mask,kernel)
+
+p = img2_gray*mask2
+pv = np.mean(p[p>0])
+
+img2_gray[img2_gray==0]=pv
 
 
-img2_gray = rgb2gray(img2)
+###
+
+# img2_gray = rgb2gray(img2)
 img2_gray = resize(img2_gray,(np.shape(img1)[0],np.shape(img1)[1]),anti_aliasing=True)
 
 # print(np.shape(img2_gray))
