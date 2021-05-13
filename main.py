@@ -170,7 +170,7 @@ h = img_hsv[:,:,0] #Hue
 s = img_hsv[:,:,1] #Sat
 v = img_hsv[:,:,2] #Val
 
-mask = ((h>0.0)&(h<0.2)&(s>0.29)&(s<=1))
+mask = np.load('mask1.npy')
 masked = np.where(mask[...,None], img2, 0)
 
 result = img2.copy()
