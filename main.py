@@ -170,7 +170,9 @@ h = img_hsv[:,:,0] #Hue
 s = img_hsv[:,:,1] #Sat
 v = img_hsv[:,:,2] #Val
 
-mask = np.load('mask1.npy')
+mask = np.load('mask.npy')
+element = np.ones([3,3],np.uint8)
+mask = dilation(mask,element)
 masked = np.where(mask[...,None], img2, 0)
 
 result = img2.copy()
@@ -181,12 +183,6 @@ img2_gray = inpaint.inpaint_biharmonic(img2_gray,mask)
 
 # img2_gray = rgb2gray(img2)
 img2_gray = resize(img2_gray,(np.shape(img1)[0],np.shape(img1)[1]),anti_aliasing=True)
-
-# print(np.shape(img2_gray))
-m = np.min(img2_gray[:])
-normA = img2_gray - m
-# normA = np.float(normA);
-normA = normA / 255;
 
 fig3, ax = plt.subplots(figsize=[15,15])
 ax.set(xticks=[], yticks=[], title="Mumbai Doppler radar Image Overlayed with Satellite Image")
