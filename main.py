@@ -16,6 +16,7 @@ from plotly.subplots import make_subplots
 from skimage import io
 from skimage.color import rgb2gray
 from skimage.transform import resize
+import cv2
 
 def read_data_thingspeak():
     URL = 'https://api.thingspeak.com/channels/1097511/feeds.json?api_key='
