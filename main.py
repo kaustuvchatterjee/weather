@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
+"""from skimage.restoration import inpaint
 Created on Tue Apr 27 12:09:34 2021
 
 @author: kaustuv
@@ -17,6 +17,7 @@ from skimage import io
 from skimage.color import rgb2gray, rgb2hsv
 from skimage.transform import resize
 from skimage.morphology import dilation
+from skimage.restoration import inpaint
 
 def read_data_thingspeak():
     URL = 'https://api.thingspeak.com/channels/1097511/feeds.json?api_key='
@@ -175,12 +176,8 @@ masked = np.where(mask[...,None], img2, 0)
 result = img2.copy()
 result[mask>0]=(0,0,0)
 img2_gray = rgb2gray(result)
+img2_gray = inpaint.inpaint_biharmonic(img2_gray,mask)
 
-kernel = kernel = np.ones((20, 20), np.uint8)
-mask2 = dilation(mask,kernel)
-
-p = img2_gray*mask2
-pv = np.mean(p[p>0])
 
 img2_gray[img2_gray==0]=pv
 
