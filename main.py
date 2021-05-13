@@ -177,11 +177,6 @@ result = img2.copy()
 result[mask>0]=(0,0,0)
 img2_gray = rgb2gray(result)
 img2_gray = inpaint.inpaint_biharmonic(img2_gray,mask)
-
-
-img2_gray[img2_gray==0]=pv
-
-
 ###
 
 # img2_gray = rgb2gray(img2)
