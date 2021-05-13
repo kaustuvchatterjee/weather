@@ -16,7 +16,6 @@ from plotly.subplots import make_subplots
 from skimage import io
 from skimage.color import rgb2gray
 from skimage.transform import resize
-import cv2
 
 def read_data_thingspeak():
     URL = 'https://api.thingspeak.com/channels/1097511/feeds.json?api_key='
@@ -163,31 +162,9 @@ x2=int(np.ceil(s[0]/1.82));
 # print(x1,x2,y1,y2)
 
 img2 = img2[x1:x2,y1:y2,:]
-###
-hsv_color1 = np.asarray([90, 50, 0])   # white!
-hsv_color2 = np.asarray([120, 255, 255])   # yellow! note the order
-
-mask = cv2.inRange(img_hsv, hsv_color1, hsv_color2)
-kernel = np.ones((1, 1), np.uint8)
-mask = cv2.erode(mask,kernel)
-mask = cv2.dilate(mask,kernel)
-masked = cv2.bitwise_and(img2, img2, mask=mask)
-result = img2.copy()
-result[mask>0]=(0,0,0)
-img2_gray = rgb2gray(result)
 
 
-kernel = kernel = np.ones((20, 20), np.uint8)
-mask2 = cv2.dilate(mask,kernel)
-p = cv2.bitwise_and(img2_gray, img2_gray, mask=mask2)
-pv = np.mean(p[p>0])
-
-img2_gray[img2_gray==0]=pv
-###
-
-
-
-# img2_gray = rgb2gray(img2)
+img2_gray = rgb2gray(img2)
 img2_gray = resize(img2_gray,(np.shape(img1)[0],np.shape(img1)[1]),anti_aliasing=True)
 
 # print(np.shape(img2_gray))
