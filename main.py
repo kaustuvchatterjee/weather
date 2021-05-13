@@ -14,8 +14,9 @@ import numpy as np
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from skimage import io
-from skimage.color import rgb2gray
+from skimage.color import rgb2gray, rgb2hsv
 from skimage.transform import resize
+from skimage.morphology import dilation
 
 def read_data_thingspeak():
     URL = 'https://api.thingspeak.com/channels/1097511/feeds.json?api_key='
