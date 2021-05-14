@@ -216,7 +216,7 @@ img1[y:y+h,x:x+w,:]=img2_dt
 
 bbox=dict(boxstyle="square", alpha=0.5, color='gray')
 fig3, ax = plt.subplots(figsize=[15,15])
-ax.set(xticks=[], yticks=[], title="Mumbai Doppler radar Image Overlayed with Satellite Image")
+ax.set(xticks=[], yticks=[], title="Mumbai Doppler Radar Image Overlayed with Satellite Image")
 plt.imshow(img1)
 plt.annotate('Radar:    ',(406,9),size=11, color = 'k', fontweight='semibold', bbox=bbox)
 plt.annotate('Satellite:',(406,19),size=11, color = 'k', fontweight='semibold', bbox=bbox)
