@@ -218,8 +218,8 @@ bbox=dict(boxstyle="square", alpha=0.5, color='gray')
 fig3, ax = plt.subplots(figsize=[15,15])
 ax.set(xticks=[], yticks=[], title="Mumbai Doppler radar Image Overlayed with Satellite Image")
 plt.imshow(img1)
-plt.annotate('Radar:    ',(406,9),size=10, color = 'k', fontweight='semibold', bbox=bbox)
-plt.annotate('Satellite:',(406,19),size=10, color = 'k', fontweight='semibold', bbox=bbox)
+plt.annotate('Radar:    ',(406,9),size=11, color = 'k', fontweight='semibold', bbox=bbox)
+plt.annotate('Satellite:',(406,19),size=11, color = 'k', fontweight='semibold', bbox=bbox)
 plt.imshow(img2_gray, cmap='gray', alpha=img2_gray)
 
 
