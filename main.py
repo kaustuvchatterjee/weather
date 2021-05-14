@@ -150,6 +150,20 @@ img1 = io.imread(url)
 url = 'https://mausam.imd.gov.in/Satellite/3Dasiasec_wv.jpg'
 img2 = io.imread(url)
 
+# Extract Date/Time
+img1 = img1[:,:,0:3]
+img1_d = img1[164:184,772:885]
+img1_t = img1[194:214,767:900]
+img1_dt = np.hstack((img1_d,img1_t))
+img1_dt = resize(img1_dt,(10,150),anti_aliasing=True)
+img1_dt = img1_dt*255
+img1_dt = img1_dt.astype(int)
+
+img2_dt = img2[30:50,510:790,:]
+img2_dt = resize(img2_dt,(10,150),anti_aliasing=True)
+img2_dt = img2_dt*255
+img2_dt = img2_dt.astype(int)
+
 # Crop
 
 img1 = img1[302:900,102:700,0:3]
@@ -184,9 +198,28 @@ img2_gray = inpaint.inpaint_biharmonic(img2_gray,mask)
 # img2_gray = rgb2gray(img2)
 img2_gray = resize(img2_gray,(np.shape(img1)[0],np.shape(img1)[1]),anti_aliasing=True)
 
+# Annotate image with date/time
+x = 448
+y = 3
+h = np.shape(img1_dt)[0]
+w = np.shape(img1_dt)[1]
+
+img1[y:y+h,x:x+w,:]=img1_dt
+
+
+x = 448
+y = 14
+h = np.shape(img2_dt)[0]
+w = np.shape(img2_dt)[1]
+
+img1[y:y+h,x:x+w,:]=img2_dt
+
+bbox=dict(boxstyle="square", alpha=0.5, color='gray')
 fig3, ax = plt.subplots(figsize=[15,15])
 ax.set(xticks=[], yticks=[], title="Mumbai Doppler radar Image Overlayed with Satellite Image")
 plt.imshow(img1)
+plt.annotate('Radar:    ',(406,9),size=10, color = 'k', fontweight='semibold', bbox=bbox)
+plt.annotate('Satellite:',(406,19),size=10, color = 'k', fontweight='semibold', bbox=bbox)
 plt.imshow(img2_gray, cmap='gray', alpha=img2_gray)
 
 
