@@ -220,7 +220,7 @@ ax.set(xticks=[], yticks=[], title="Mumbai Doppler Radar Image Overlayed with Sa
 plt.imshow(img1)
 plt.annotate('Radar:    ',(406,9),size=11, color = 'k', fontweight='semibold', bbox=bbox)
 plt.annotate('Satellite:',(406,19),size=11, color = 'k', fontweight='semibold', bbox=bbox)
-plt.imshow(img2_gray, cmap='gray', alpha=img2_gray)
+plt.imshow(img2_gray, cmap='gray', alpha=img2_gray*0.8)
 
 
 # Streamlit
