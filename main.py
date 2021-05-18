@@ -130,7 +130,7 @@ fig2.update_layout(title_text = 'Precipitation & Relative Humidity',
                 template = 'plotly_white'
                 )
 fig2.update_yaxes(title_text="Precipitation (mm)", 
-                  range = [0,100],
+#                  range = [0,100],
                   secondary_y=False)
 fig2.update_yaxes(title_text="Relative Humidity (%)", 
                   range = [0,100],
