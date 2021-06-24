@@ -19,6 +19,7 @@ from skimage.transform import resize
 from skimage.morphology import dilation
 from skimage.restoration import inpaint
 import pandas as pd
+import matplotlib.dates as mdates
 
 def read_data_thingspeak():
     URL = 'https://api.thingspeak.com/channels/1097511/feeds.json?api_key='
@@ -234,9 +235,12 @@ except:
     st.text("Unable to load Radar & Satellite images!")
 
 # Lake water levels:
-    url = 'https://raw.githubusercontent.com/kaustuvchatterjee/lakes/main/lakelevels.csv'
+url = 'https://raw.githubusercontent.com/kaustuvchatterjee/lakes/main/lakelevels.csv'
 df = pd.read_csv(url)
-fig4 =  plt.subplots(figsize=(16,10))
+df['date'] = pd.to_datetime(df['date'])
+
+
+fig4, ax =  plt.subplots(figsize=(16,12))
 ax1 = plt.subplot(2,2,1)
 ax1.grid()
 ax1.bar(df['lake'],df['content'])
@@ -254,6 +258,8 @@ ax2.grid()
 ax2.legend()
 ax2.set_title('Water Level - Trend')
 ax2.set_xlabel('Date')
-
+monthyearFmt = mdates.DateFormatter('%b %y')
+ax2.xaxis.set_major_formatter(monthyearFmt)
+ax2.autoscale(enable=True, axis='x', tight=True)
 st.text("Water Level at Lakes Supplying Mumbai")
 st.pyplot(fig4)
