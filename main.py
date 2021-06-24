@@ -240,7 +240,7 @@ df = pd.read_csv(url)
 df['date'] = pd.to_datetime(df['date'])
 
 
-fig4, ax =  plt.subplots(figsize=(16,12))
+fig4, ax =  plt.subplots(figsize=(16,12), sharey=True)
 ax1 = plt.subplot(2,2,1)
 ax1.grid()
 ax1.bar(df['lake'],df['content'])
