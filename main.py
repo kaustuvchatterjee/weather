@@ -7,7 +7,7 @@ Created on Tue Apr 27 12:09:34 2021
 """
 import streamlit as st 
 import requests
-import json
+# import json
 import datetime as dt
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,6 +18,7 @@ from skimage.color import rgb2gray, rgb2hsv
 from skimage.transform import resize
 from skimage.morphology import dilation
 from skimage.restoration import inpaint
+import pandas as pd
 
 def read_data_thingspeak():
     URL = 'https://api.thingspeak.com/channels/1097511/feeds.json?api_key='
@@ -231,3 +232,28 @@ try:
 
 except:
     st.text("Unable to load Radar & Satellite images!")
+
+# Lake water levels:
+    url = 'https://raw.githubusercontent.com/kaustuvchatterjee/lakes/main/lakelevels.csv'
+df = pd.read_csv(url)
+fig4 =  plt.subplots(figsize=(16,10))
+ax1 = plt.subplot(2,2,1)
+ax1.grid()
+ax1.bar(df['lake'],df['content'])
+ax1.set_ylim([0,100])
+ax1.set_title('Water Level - Latest')
+ax1.set_xlabel('Lake')
+ax1.set_ylabel('Percent of Total Capacity')
+
+
+ax2 = plt.subplot(2,2,2, sharey=ax1)
+for lake in df.lake.unique():
+    ax2.plot(df[df['lake']==lake]['date'],df[df['lake']==lake]['content'], label=lake, marker='o')
+
+ax2.grid()
+ax2.legend()
+ax2.set_title('Water Level - Trend')
+ax2.set_xlabel('Date')
+
+st.text("Water Level at Lakes Supplying Mumbai")
+st.pyplot(fig4)
