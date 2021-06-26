@@ -330,7 +330,7 @@ st.pyplot(fig4, dpi=300)
 fig5 =  plt.figure(figsize=(16,12))
 ax2 = plt.gca()
 for lake in df.lake.unique():
-    ax2.plot(df[df['lake']==lake]['date'],df[df['lake']==lake]['content'], label=lake, marker='o')
+    ax2.plot(df[df['lake']==lake]['date'],df[df['lake']==lake]['content'], label=lake)
 
 ax2.grid()
 ax2.legend()
