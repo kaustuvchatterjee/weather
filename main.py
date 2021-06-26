@@ -6,13 +6,13 @@ Created on Tue Apr 27 12:09:34 2021
 @author: kaustuv
 """
 import streamlit as st 
-import requests
+# import requests
 # import json
-import datetime as dt
+# import datetime as dt
 import matplotlib.pyplot as plt
 import numpy as np
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
+# import plotly.graph_objects as go
+# from plotly.subplots import make_subplots
 from skimage import io
 from skimage.color import rgb2gray, rgb2hsv
 from skimage.transform import resize
@@ -131,8 +131,8 @@ fig1 = plt.figure(figsize=(12,6))
 plt.fill_between(t,minTemp, maxTemp, color='lightblue', alpha = 0.6)
 plt.plot(t,meanTemp, t,heatIndex)
 yTitle = "Temperature ($^\circ$C)"
-plt.ylabel(yTitle, fontsize=14)
-plt.ylabel('Date', fontsize=14)
+plt.ylabel(yTitle, fontsize=12)
+plt.xlabel('Date', fontsize=12)
 plt.title ('Temperature')
 plt.grid()
 label=['Mean Temp','Heat Index']
@@ -206,6 +206,8 @@ ax2.spines['left'].set_linewidth(2)
 ax2.spines['bottom'].set_position(('data',0))
 ax2.set_ylabel('Precipitatiom (mm)',
               fontsize=12,)
+ax2.set_xlabel('Date',
+              fontsize=12,)
 ax2.yaxis.set_label_position("left")
 plt.grid()
 
@@ -215,7 +217,7 @@ ax2.xaxis.set_major_formatter(monthyearFmt)
 plt.autoscale(enable=True, axis='x', tight=True)
 
 # st.plotly_chart(fig2)
-st.pyplot(fig2)
+st.pyplot(fig2, dpi=300)
 
 try:
     # Doppler Radar Plot
@@ -330,4 +332,4 @@ monthyearFmt = mdates.DateFormatter('%d %b %y')
 ax2.xaxis.set_major_formatter(monthyearFmt)
 # ax2.autoscale(enable=True, axis='x', tight=True)
 st.text("Water Level at Lakes Supplying Mumbai")
-st.pyplot(fig4)
+st.pyplot(fig4, dpi=300)
