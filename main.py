@@ -65,6 +65,7 @@ import matplotlib.dates as mdates
 #---------------------------------
 def read_data():
     df = pd.read_csv('weatherdata.csv')
+    df['date'] = pd.to_datetime(df['date'])
     return df['date'], df['maxTemp'], df['minTemp'], df['relHum'], df['rainFall']
 
 t, maxTemp, minTemp, relHum, precip = read_data()
@@ -93,70 +94,128 @@ heatIndex = (HI-32)*5/9;
 tx = np.hstack((t,t[::-1]))
 tempy = np.hstack((maxTemp,minTemp[::-1]))
 
-fig1 = go.Figure()
+# fig1 = go.Figure()
 
-fig1.add_trace(go.Scatter(x=tx,
-                          y=tempy,
-                          fill='toself',
-                          fillcolor='rgba(0,100,80,0.2)',
-                          line=dict(color='rgba(255,255,255,0)'),
-                          hoverinfo="skip",
-                          showlegend=False,
-                         ))
-fig1.add_trace(go.Scatter(x=t,y=meanTemp, mode="lines", name="Mean Temp",line={'dash': 'solid', 'color': 'midnightblue'}))
-fig1.add_trace(go.Scatter(x=t,y=heatIndex, mode="lines", name="Heat Index",line={'dash': 'solid', 'color': 'orangered'}))
+# fig1.add_trace(go.Scatter(x=tx,
+#                           y=tempy,
+#                           fill='toself',
+#                           fillcolor='rgba(0,100,80,0.2)',
+#                           line=dict(color='rgba(255,255,255,0)'),
+#                           hoverinfo="skip",
+#                           showlegend=False,
+#                          ))
+# fig1.add_trace(go.Scatter(x=t,y=meanTemp, mode="lines", name="Mean Temp",line={'dash': 'solid', 'color': 'midnightblue'}))
+# fig1.add_trace(go.Scatter(x=t,y=heatIndex, mode="lines", name="Heat Index",line={'dash': 'solid', 'color': 'orangered'}))
 
 
 
-yTitle = 'Temperature (&#176;C)'
-fig1.update_layout(title_text = 'Temperature',
-                xaxis_title='Date',
-                yaxis_title=yTitle,
-                width = 740, height=480,
-                margin=dict(r=20, b=10, l=10, t=30),
-                showlegend = True,
-                template = 'plotly_white'
-                )
-fig1.update_layout(legend=dict(
-    yanchor="top",
-    y=0.99,
-    xanchor="left",
-    x=0.01,
-    bgcolor = 'rgba(255,255,255,0.8)'
-))
-st.plotly_chart(fig1)
+# yTitle = 'Temperature (&#176;C)'
+# fig1.update_layout(title_text = 'Temperature',
+#                 xaxis_title='Date',
+#                 yaxis_title=yTitle,
+#                 width = 740, height=480,
+#                 margin=dict(r=20, b=10, l=10, t=30),
+#                 showlegend = True,
+#                 template = 'plotly_white'
+#                 )
+# fig1.update_layout(legend=dict(
+#     yanchor="top",
+#     y=0.99,
+#     xanchor="left",
+#     x=0.01,
+#     bgcolor = 'rgba(255,255,255,0.8)'
+# ))
+# st.plotly_chart(fig1)
+
+fig1 = plt.figure(figsize=(12,6))
+plt.fill_between(t,minTemp, maxTemp, color='lightblue', alpha = 0.6)
+plt.plot(t,meanTemp, t,heatIndex)
+yTitle = "Temperature ($^\circ$C)"
+plt.ylabel(yTitle, fontsize=14)
+plt.ylabel('Date', fontsize=14)
+plt.title ('Temperature')
+plt.grid()
+label=['Mean Temp','Heat Index']
+plt.legend(label)
+ax=plt.gca()
+monthyearFmt = mdates.DateFormatter('%b %y')
+ax.xaxis.set_major_formatter(monthyearFmt)
+plt.autoscale(enable=True, axis='x', tight=True)
+plt.show()
+
+st.pyplot(fig1, dpi=300)
 
 # Precipitation Plot
-fig2 = make_subplots(specs=[[{"secondary_y": True}]])
-fig2.add_trace(go.Scatter(x=t,y=precip, mode="lines", name="Precipitation",line={'dash': 'solid', 'color': 'dodgerblue'}),
-               secondary_y=False)
-fig2.add_trace(go.Scatter(x=t,y=relHum, mode="lines", name="Rel Humidity",line={'dash': 'solid', 'color': 'lightseagreen'}),
-               secondary_y=True)
+# fig2 = make_subplots(specs=[[{"secondary_y": True}]])
+# fig2.add_trace(go.Scatter(x=t,y=precip, mode="lines", name="Precipitation",line={'dash': 'solid', 'color': 'dodgerblue'}),
+#                secondary_y=False)
+# fig2.add_trace(go.Scatter(x=t,y=relHum, mode="lines", name="Rel Humidity",line={'dash': 'solid', 'color': 'lightseagreen'}),
+#                secondary_y=True)
 
-fig2.update_layout(title_text = 'Precipitation & Relative Humidity',
-                xaxis_title='Date',
-                width = 740, height=480,
-                margin=dict(r=20, b=10, l=10, t=30),
-                showlegend = True,
-                template = 'plotly_white'
-                )
-fig2.update_yaxes(title_text="Precipitation (mm)", 
-#                  range = [0,100],
-                  secondary_y=False)
-fig2.update_yaxes(title_text="Relative Humidity (%)", 
-                  range = [0,100],
-                  secondary_y=True)
+# fig2.update_layout(title_text = 'Precipitation & Relative Humidity',
+#                 xaxis_title='Date',
+#                 width = 740, height=480,
+#                 margin=dict(r=20, b=10, l=10, t=30),
+#                 showlegend = True,
+#                 template = 'plotly_white'
+#                 )
+# fig2.update_yaxes(title_text="Precipitation (mm)", 
+# #                  range = [0,100],
+#                   secondary_y=False)
+# fig2.update_yaxes(title_text="Relative Humidity (%)", 
+#                   range = [0,100],
+#                   secondary_y=True)
 
-fig2.update_layout(legend=dict(
-    yanchor="top",
-    y=0.99,
-    xanchor="left",
-    x=0.01,
-    bgcolor = 'rgba(255,255,255,0.8)'
-))
+# fig2.update_layout(legend=dict(
+#     yanchor="top",
+#     y=0.99,
+#     xanchor="left",
+#     x=0.01,
+#     bgcolor = 'rgba(255,255,255,0.8)'
+# ))
 
-st.plotly_chart(fig2)
+fig2 = plt.figure(figsize=(12,6))
+plt.grid()
+plt.plot(t,relHum, color='teal')
+plt.fill_between(t,relHum, color = 'lightgreen', alpha=0.2)
+ax1 = plt.gca()
+ax1.set_ylim([0,100])
+ax1.yaxis.set_ticks_position('left')
+ax1.spines['right'].set_color('none')
+ax1.spines['top'].set_color('none')
+ax1.spines['left'].set_color('teal')
+ax1.spines['left'].set_position(('axes',-0.02))
+ax1.spines['left'].set_linewidth(2)
+ax1.spines['bottom'].set_position(('data',0))
+ax1.set_ylabel('Relative Humidity (%)',
+              fontsize=12)
 
+
+plt.twinx()
+
+plt.plot(t,precip, color='#1f77b4')
+plt.fill_between(t,precip, color='lightblue', alpha = 0.8)
+ax2 = plt.gca()
+ax2.set_ylim([0,500])
+ax2.yaxis.set_ticks_position('left')
+ax2.spines['left'].set_color('#1f77b4')
+ax2.spines['right'].set_color('none')
+ax2.spines['top'].set_color('none')
+ax2.spines['left'].set_position(('axes',-0.1))
+ax2.spines['left'].set_linewidth(2)
+ax2.spines['bottom'].set_position(('data',0))
+ax2.set_ylabel('Precipitatiom (mm)',
+              fontsize=12,)
+ax2.yaxis.set_label_position("left")
+plt.grid()
+
+      
+monthyearFmt = mdates.DateFormatter('%b %y')
+ax2.xaxis.set_major_formatter(monthyearFmt)
+plt.autoscale(enable=True, axis='x', tight=True)
+
+# st.plotly_chart(fig2)
+st.pyplot(fig2)
 
 try:
     # Doppler Radar Plot
