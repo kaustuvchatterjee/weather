@@ -21,46 +21,46 @@ from skimage.restoration import inpaint
 import pandas as pd
 import matplotlib.dates as mdates
 
-def read_data_thingspeak():
-    URL = 'https://api.thingspeak.com/channels/1097511/feeds.json?api_key='
-    KEY = 'G8PPL9L3I2CSCRJ2'
-    HEADER = '&results='
-    POINTS = 180
-    NEW_URL = URL+KEY+HEADER+str(POINTS)
-#     print(NEW_URL)
+# def read_data_thingspeak():
+#     URL = 'https://api.thingspeak.com/channels/1097511/feeds.json?api_key='
+#     KEY = 'G8PPL9L3I2CSCRJ2'
+#     HEADER = '&results='
+#     POINTS = 180
+#     NEW_URL = URL+KEY+HEADER+str(POINTS)
+# #     print(NEW_URL)
     
-    get_data = requests.get(NEW_URL).json()
-#     print(get_data)
+#     get_data = requests.get(NEW_URL).json()
+# #     print(get_data)
     
-    channel_id = get_data['channel']['id']
+#     channel_id = get_data['channel']['id']
     
-    feed = get_data['feeds']
+#     feed = get_data['feeds']
     
-    t = []
-    maxTemp = []
-    minTemp = []
-    relHum = []
-    precip = []
+#     t = []
+#     maxTemp = []
+#     minTemp = []
+#     relHum = []
+#     precip = []
     
-    for x in feed:
-        date_obj = dt.datetime.strptime(x['created_at'],'%Y-%m-%dT%H:%M:%SZ')
+#     for x in feed:
+#         date_obj = dt.datetime.strptime(x['created_at'],'%Y-%m-%dT%H:%M:%SZ')
         
-        t.append(date_obj.date())
-        maxTemp.append(np.float(x['field1']))
-        minTemp.append(np.float(x['field2']))
-        relHum.append(np.float(x['field3']))
-        precip.append(np.float(x['field4']))
+#         t.append(date_obj.date())
+#         maxTemp.append(np.float(x['field1']))
+#         minTemp.append(np.float(x['field2']))
+#         relHum.append(np.float(x['field3']))
+#         precip.append(np.float(x['field4']))
     
-    t = np.array(t)
-    maxTemp = np.array(maxTemp)
-    minTemp = np.array(minTemp)
-    relHum = np.array(relHum)
-    precip = np.array(precip)
+#     t = np.array(t)
+#     maxTemp = np.array(maxTemp)
+#     minTemp = np.array(minTemp)
+#     relHum = np.array(relHum)
+#     precip = np.array(precip)
     
-    return t, maxTemp, minTemp, relHum, precip
+#     return t, maxTemp, minTemp, relHum, precip
 
-# Fetch weather data
-t, maxTemp, minTemp, relHum, precip = read_data_thingspeak()
+# # Fetch weather data
+# t, maxTemp, minTemp, relHum, precip = read_data_thingspeak()
 
 #---------------------------------
 def read_data():
