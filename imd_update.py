@@ -40,7 +40,7 @@ if not minTemp.replace('.', '', 1).isdigit():
 if not relHum.replace('.', '', 1).isdigit():
     relHum = np.nan
 if not rainFall.replace('.', '', 1).isdigit():
-    rainFall = np.nan
+    rainFall = 0.1
 
     
 str = data[1].text
