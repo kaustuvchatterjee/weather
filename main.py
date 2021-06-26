@@ -206,8 +206,7 @@ ax2.spines['left'].set_linewidth(2)
 ax2.spines['bottom'].set_position(('data',0))
 ax2.set_ylabel('Precipitatiom (mm)',
               fontsize=12,)
-ax2.set_xlabel('Date',
-              fontsize=12,)
+
 ax2.yaxis.set_label_position("left")
 plt.grid()
 
@@ -215,7 +214,8 @@ plt.grid()
 monthyearFmt = mdates.DateFormatter('%b %y')
 ax2.xaxis.set_major_formatter(monthyearFmt)
 plt.autoscale(enable=True, axis='x', tight=True)
-
+plt.title('Relative Humidity & Precipitation')
+plt.xlabel('Date', fontsize=12,)
 # st.plotly_chart(fig2)
 st.pyplot(fig2, dpi=300)
 
