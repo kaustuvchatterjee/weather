@@ -311,7 +311,7 @@ df['date'] = pd.to_datetime(df['date'])
 latest = df.iloc[-6:]
 totCapacity = latest['capacity'].sum()
 totLevel = latest['level'].sum()
-meanContent = np.mean(totLevel/totCapacity)
+meanContent = 100*np.mean(totLevel/totCapacity)
 
 st.text("Water Level at Lakes Supplying Mumbai")
 
