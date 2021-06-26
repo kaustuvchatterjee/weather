@@ -59,4 +59,4 @@ df = pd.read_csv('weatherdata.csv')
 if obsDate not in df.values:
     dct = {'date':obsDate, 'maxTemp':maxTemp, 'minTemp':minTemp, 'relHum':relHum, 'rainFall':rainFall}
     df = df.append(dct, ignore_index=True)
-    df.to_csv('weatherdata.csv')
+    df.to_csv('weatherdata.csv',index=False)
