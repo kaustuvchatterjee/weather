@@ -141,7 +141,7 @@ ax=plt.gca()
 monthyearFmt = mdates.DateFormatter('%b %y')
 ax.xaxis.set_major_formatter(monthyearFmt)
 plt.autoscale(enable=True, axis='x', tight=True)
-plt.show()
+
 
 st.pyplot(fig1, dpi=300)
 
@@ -309,18 +309,21 @@ url = 'https://raw.githubusercontent.com/kaustuvchatterjee/lakes/main/lakelevels
 df = pd.read_csv(url)
 df['date'] = pd.to_datetime(df['date'])
 
+st.text("Water Level at Lakes Supplying Mumbai")
 
-fig4, ax =  plt.subplots(figsize=(16,12), sharey=True)
-ax1 = plt.subplot(2,2,1)
+fig4 =  plt.figure(figsize=(12,6))
+ax1=plt.gca()
 ax1.grid()
 ax1.bar(df['lake'],df['content'])
 ax1.set_ylim([0,100])
 ax1.set_title('Water Level - Latest')
 ax1.set_xlabel('Lake')
 ax1.set_ylabel('Percent of Total Capacity')
+st.pyplot(fig4, dpi=300)
 
 
-ax2 = plt.subplot(2,2,2, sharey=ax1)
+fig5 =  plt.figure(figsize=(16,12))
+ax2 = plt.gca()
 for lake in df.lake.unique():
     ax2.plot(df[df['lake']==lake]['date'],df[df['lake']==lake]['content'], label=lake, marker='o')
 
@@ -330,6 +333,7 @@ ax2.set_title('Water Level - Trend')
 ax2.set_xlabel('Date')
 monthyearFmt = mdates.DateFormatter('%d %b %y')
 ax2.xaxis.set_major_formatter(monthyearFmt)
+ax2.set_ylim([0,100])
 # ax2.autoscale(enable=True, axis='x', tight=True)
-st.text("Water Level at Lakes Supplying Mumbai")
-st.pyplot(fig4, dpi=300)
+
+st.pyplot(fig5, dpi=300)
