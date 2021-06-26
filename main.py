@@ -327,7 +327,7 @@ plt.axhline(meanContent, color='r')
 st.pyplot(fig4, dpi=300)
 
 
-fig5 =  plt.figure(figsize=(16,12))
+fig5 =  plt.figure(figsize=(12,6))
 ax2 = plt.gca()
 for lake in df.lake.unique():
     ax2.plot(df[df['lake']==lake]['date'],df[df['lake']==lake]['content'], label=lake)
