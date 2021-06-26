@@ -308,17 +308,22 @@ except:
 url = 'https://raw.githubusercontent.com/kaustuvchatterjee/lakes/main/lakelevels.csv'
 df = pd.read_csv(url)
 df['date'] = pd.to_datetime(df['date'])
+latest = df.iloc[-6:]
+totCapacity = latest['capacity'].sum()
+totLevel = latest['level'].sum()
+meanContent = np.mean(totLevel/totCapacity)
 
 st.text("Water Level at Lakes Supplying Mumbai")
 
 fig4 =  plt.figure(figsize=(12,6))
 ax1=plt.gca()
 ax1.grid()
-ax1.bar(df['lake'],df['content'])
+ax1.bar(latest['lake'],latest['content'])
 ax1.set_ylim([0,100])
 ax1.set_title('Water Level - Latest')
 ax1.set_xlabel('Lake')
 ax1.set_ylabel('Percent of Total Capacity')
+plt.axhline(meanContent, color='r')
 st.pyplot(fig4, dpi=300)
 
 
