@@ -62,6 +62,15 @@ def read_data_thingspeak():
 # Fetch weather data
 t, maxTemp, minTemp, relHum, precip = read_data_thingspeak()
 
+#---------------------------------
+def read_data():
+    df = pd.read_csv('weatherdata.csv')
+    return df['date'], df['maxTemp'], df['minTemp'], df['relHum'], df['rainFall']
+
+t, maxTemp, minTemp, relHum, precip = read_data()
+
+#-------------------------------------
+
 # Calculate Heat Index
 meanTemp = (minTemp + maxTemp)/2
 
