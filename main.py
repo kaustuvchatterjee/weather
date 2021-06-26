@@ -335,10 +335,11 @@ for lake in df.lake.unique():
 ax2.grid()
 ax2.legend()
 ax2.set_title('Water Level - Trend')
-ax2.set_xlabel('Date')
 monthyearFmt = mdates.DateFormatter('%d %b %y')
 ax2.xaxis.set_major_formatter(monthyearFmt)
 ax2.set_ylim([0,100])
-# ax2.autoscale(enable=True, axis='x', tight=True)
+ax2.autoscale(enable=True, axis='x', tight=True)
+ax2.set_xlabel('Date')
+ax2.set_ylabel('Percent of Total Capacity')
 
 st.pyplot(fig5, dpi=300)
