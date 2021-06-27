@@ -333,7 +333,7 @@ for lake in df.lake.unique():
     ax2.plot(df[df['lake']==lake]['date'],df[df['lake']==lake]['content'], label=lake)
 
 ax2.grid()
-ax2.legend()
+ax2.legend(loc='upper left')
 ax2.set_title('Water Level - Trend')
 monthyearFmt = mdates.DateFormatter('%d %b %y')
 ax2.xaxis.set_major_formatter(monthyearFmt)
