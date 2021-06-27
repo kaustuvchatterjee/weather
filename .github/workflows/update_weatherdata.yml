@@ -2,7 +2,7 @@ name: update_weatherdata
 
 on:
   schedule:
-    - cron: '0 9 * * *' # runs at 12:00 UTC everyday
+    - cron: '30 5 * * *' # runs at 12:00 UTC everyday
 
 jobs:
   build:
