@@ -228,13 +228,24 @@ try:
     img2 = io.imread(url)
 
     # Extract Date/Time
-    img1 = img1[:,:,0:3]
-    img1_d = img1[164:184,772:885]
-    img1_t = img1[194:214,767:900]
-    img1_dt = np.hstack((img1_d,img1_t))
-    img1_dt = resize(img1_dt,(10,150),anti_aliasing=True)
-    img1_dt = img1_dt*255
-    img1_dt = img1_dt.astype(int)
+    if (img1_shape[0] == 1000) & (img1_shape[1] == 1000):
+        img1 = img1[:,:,0:3]
+        img1_d = img1[164:184,772:885]
+        img1_t = img1[194:214,767:900]
+        img1_dt = np.hstack((img1_d,img1_t))
+        img1_dt = resize(img1_dt,(10,150),anti_aliasing=True)
+        img1_dt = img1_dt*255
+        img1_dt = img1_dt.astype(int)
+    
+    if (img1_shape[0] == 716) & (img1_shape[1] == 1078):
+        img1 = img1[:,:,0:3]
+        img1_d = img1[16:36, 6:140]
+        img1_t = img1[16:36, 270:430]
+        img1_dt = np.hstack((img1_d,img1_t))
+        img1_dt = resize(img1_dt,(10,150),anti_aliasing=True)
+        img1_dt = img1_dt*255
+        img1_dt = img1_dt.astype(int)
+
 
     img2_dt = img2[30:50,510:790,:]
     img2_dt = resize(img2_dt,(10,150),anti_aliasing=True)
@@ -243,7 +254,12 @@ try:
 
     # Crop
 
-    img1 = img1[302:900,102:700,0:3]
+    if (img1_shape[0] == 1000) & (img1_shape[1] == 1000):
+        img1 = img1[302:900,102:700,0:3]
+        
+    if (img1_shape[0] == 716) & (img1_shape[1] == 1078):
+        img1 = img1[174:698, 0:524, 0:3]
+        img1 = resize(img1,(598,598))
 
     s = np.shape(img2)
     # print(s)
@@ -281,7 +297,10 @@ try:
     h = np.shape(img1_dt)[0]
     w = np.shape(img1_dt)[1]
 
-    img1[y:y+h,x:x+w,:]=img1_dt
+    if (img1_shape[0] == 1000) & (img1_shape[1] == 1000):
+        img1[y:y+h,x:x+w,:]=img1_dt
+    if (img1_shape[0] == 716) & (img1_shape[1] == 1078):
+        img1[y:y+h,x:x+w,:]=img1_dt/255
 
 
     x = 448
@@ -289,7 +308,10 @@ try:
     h = np.shape(img2_dt)[0]
     w = np.shape(img2_dt)[1]
 
-    img1[y:y+h,x:x+w,:]=img2_dt
+    if (img1_shape[0] == 1000) & (img1_shape[1] == 1000):
+        img1[y:y+h,x:x+w,:]=img2_dt
+    if (img1_shape[0] == 716) & (img1_shape[1] == 1078):
+        img1[y:y+h,x:x+w,:]=img2_dt/255
 
     bbox=dict(boxstyle="square", alpha=0.5, color='gray')
     fig3, ax = plt.subplots(figsize=[15,15])
