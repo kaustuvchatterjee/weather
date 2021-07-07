@@ -324,7 +324,7 @@ try:
 
     st.pyplot(fig3)
 
-#except:
+except:
     st.text("Unable to load Radar & Satellite images!")
 
 # Lake water levels:
