@@ -356,7 +356,7 @@ ax2 = plt.gca()
 for lake in df.lake.unique():
     ax2.plot(df[df['lake']==lake]['date'],df[df['lake']==lake]['content'], label=lake)
 
-plt.plot(meanContent_ts, color='blue')
+plt.plot(meanContent_ts, color='lightblue')
 plt.fill_between(meanContent_ts.index,meanContent_ts, color='lightblue', alpha =0.4)
 
 ax2.grid()
