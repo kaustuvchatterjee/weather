@@ -350,10 +350,14 @@ plt.axhline(meanContent, color='r')
 st.pyplot(fig4, dpi=300)
 
 
+meanContent_ts=(df['level'].groupby(df["date"]).sum()/df['capacity'].groupby(df["date"]).sum())*100
 fig5 =  plt.figure(figsize=(12,6))
 ax2 = plt.gca()
 for lake in df.lake.unique():
     ax2.plot(df[df['lake']==lake]['date'],df[df['lake']==lake]['content'], label=lake)
+
+plt.plot(meanContent_ts, color='blue')
+plt.fill_between(meanContent_ts.index,meanContent_ts, color='lightblue', alpha =0.4)
 
 ax2.grid()
 ax2.legend(loc='upper left')
