@@ -362,7 +362,7 @@ plt.fill_between(meanContent_ts.index,meanContent_ts, color='lightblue', alpha =
 ax2.grid()
 ax2.legend(loc='upper left')
 ax2.set_title('Water Level - Trend')
-monthyearFmt = mdates.DateFormatter('%d %b %y')
+# monthyearFmt = mdates.DateFormatter('%d %b %y')
 ax2.xaxis.set_major_formatter(monthyearFmt)
 # ax2.xaxis.set_major_locator(mdates.DayLocator(interval=7))
 ax2.set_ylim([0,100])
