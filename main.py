@@ -331,22 +331,37 @@ except:
 url = 'https://raw.githubusercontent.com/kaustuvchatterjee/lakes/main/lakelevels.csv'
 df = pd.read_csv(url)
 df['date'] = pd.to_datetime(df['date'])
-latest = df.iloc[-6:]
-totCapacity = latest['capacity'].sum()
-totLevel = latest['level'].sum()
-meanContent = 100*np.mean(totLevel/totCapacity)
+# latest = df.iloc[-6:]
+# totCapacity = latest['capacity'].sum()
+# totLevel = latest['level'].sum()
+# meanContent = 100*np.mean(totLevel/totCapacity)
+
+lake_name = []
+lake_capacity = []
+lake_level = []
+lake_content = []
+
+for lake in df.lake.unique():
+    lat_cap = df[df['lake']==lake]['capacity'].iloc[-1]
+    lat_lev = df[df['lake']==lake]['level'].iloc[-1]
+    lake_name.append(lake)
+    lake_capacity.append(lat_cap)
+    lake_level.append(lat_lev)
+    lake_content.append(100*lat_lev/lat_cap)
+
+latest_meanContent = 100*np.sum(lake_level)/np.sum(lake_capacity)
 
 st.text("Water Level at Lakes Supplying Mumbai")
 
 fig4 =  plt.figure(figsize=(12,6))
 ax1=plt.gca()
 ax1.grid()
-ax1.bar(latest['lake'],latest['content'])
+ax1.bar(lake_name,lake_content)
 ax1.set_ylim([0,100])
 ax1.set_title('Water Level - Latest')
 ax1.set_xlabel('Lake')
 ax1.set_ylabel('Percent of Total Capacity')
-plt.axhline(meanContent, color='r')
+plt.axhline(latest_meanContent, color='r')
 st.pyplot(fig4, dpi=300)
 
 
