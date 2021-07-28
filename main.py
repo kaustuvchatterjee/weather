@@ -366,6 +366,7 @@ st.pyplot(fig4, dpi=300)
 
 
 meanContent_ts=(df['level'].groupby(df["date"]).sum()/df['capacity'].groupby(df["date"]).sum())*100
+
 fig5 =  plt.figure(figsize=(12,6))
 ax2 = plt.gca()
 for lake in df.lake.unique():
@@ -377,8 +378,8 @@ plt.fill_between(meanContent_ts.index,meanContent_ts, color='lightblue', alpha =
 ax2.grid()
 ax2.legend(loc='upper left')
 ax2.set_title('Water Level - Trend')
-# monthyearFmt = mdates.DateFormatter('%d %b %y')
-# ax2.xaxis.set_major_formatter(monthyearFmt)
+monthyearFmt = mdates.DateFormatter('%b %y')
+ax2.xaxis.set_major_formatter(monthyearFmt)
 # ax2.xaxis.set_major_locator(mdates.DayLocator(interval=7))
 ax2.set_ylim([0,100])
 ax2.autoscale(enable=True, axis='x', tight=True)
