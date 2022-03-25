@@ -357,7 +357,8 @@ try:
     h = img_hsv[:,:,0] #Hue
     s = img_hsv[:,:,1] #Sat
     v = img_hsv[:,:,2] #Val
-
+    
+   
     mask = np.load('mask.npy')
     mask = resize(mask,(a[0],a[1]),anti_aliasing=True)
     element = np.ones([3,3],np.uint8)
@@ -369,6 +370,23 @@ try:
     img2_gray = inpaint.inpaint_biharmonic(img2_gray,mask)
     img2_gray = resize(img2_gray,(2400,2400),anti_aliasing=True)
     alpha = img2_gray
+    
+    # Annotate image with date/time
+    x = 2000
+    y = 60
+    h = np.shape(img1_dt)[0]
+    w = np.shape(img1_dt)[1]
+
+    img1[y:y+h,x:x+w,:]=img1_dt
+
+
+    x = 2000
+    y = 120
+    h = np.shape(img2_dt)[0]
+    w = np.shape(img2_dt)[1]
+
+    img1[y:y+h,x:x+w,:]=img2_dt
+
 
     #Plot
     bbox=dict(boxstyle="square", alpha=0.5, color='gray')
