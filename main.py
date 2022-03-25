@@ -219,113 +219,172 @@ plt.xlabel('Date', fontsize=12,)
 # st.plotly_chart(fig2)
 st.pyplot(fig2, dpi=300)
 
+# try:
+#     # Doppler Radar Plot
+#     url = 'https://mausam.imd.gov.in/Radar/caz_mum.gif'
+#     img1 = io.imread(url)
+#     img1_shape = np.shape(img1)
+#     # print(np.shape(img1))
+#     url = 'https://mausam.imd.gov.in/Satellite/3Dasiasec_wv.jpg'
+#     img2 = io.imread(url)
+
+#     # Extract Date/Time
+#     if (img1_shape[0] == 1000) & (img1_shape[1] == 1000):
+#         img1 = img1[:,:,0:3]
+#         img1_d = img1[164:184,772:885]
+#         img1_t = img1[194:214,767:900]
+#         img1_dt = np.hstack((img1_d,img1_t))
+#         img1_dt = resize(img1_dt,(10,150),anti_aliasing=True)
+#         img1_dt = img1_dt*255
+#         img1_dt = img1_dt.astype(int)
+
+#     if (img1_shape[0] == 716) & (img1_shape[1] == 1078):
+#         img1 = img1[:,:,0:3]
+#         img1_d = img1[16:36, 6:140]
+#         img1_t = img1[16:36, 270:430]
+#         img1_dt = np.hstack((img1_d,img1_t))
+#         img1_dt = resize(img1_dt,(10,150),anti_aliasing=True)
+#         img1_dt = img1_dt*255
+#         img1_dt = img1_dt.astype(int)
+
+
+#     img2_dt = img2[30:50,510:790,:]
+#     img2_dt = resize(img2_dt,(10,150),anti_aliasing=True)
+#     img2_dt = img2_dt*255
+#     img2_dt = img2_dt.astype(int)
+
+#     # Crop
+
+#     if (img1_shape[0] == 1000) & (img1_shape[1] == 1000):
+#         img1 = img1[302:900,102:700,0:3]
+
+#     if (img1_shape[0] == 716) & (img1_shape[1] == 1078):
+#         img1 = img1[174:698, 0:524, 0:3]
+#         img1 = resize(img1,(598,598))
+
+#     s = np.shape(img2)
+#     # print(s)
+#     y1=int(np.ceil(s[1]/2.409));
+#     y2=int(np.ceil(s[1]/2.023));
+#     x1=int(np.ceil(s[0]/2.09));
+#     x2=int(np.ceil(s[0]/1.82));
+
+#     # print(x1,x2,y1,y2)
+
+#     img2 = img2[x1:x2,y1:y2,:]
+#     ###
+#     img_hsv = rgb2hsv(img2)
+#     h = img_hsv[:,:,0] #Hue
+#     s = img_hsv[:,:,1] #Sat
+#     v = img_hsv[:,:,2] #Val
+
+#     mask = np.load('mask.npy')
+#     element = np.ones([3,3],np.uint8)
+#     mask = dilation(mask,element)
+#     masked = np.where(mask[...,None], img2, 0)
+
+#     result = img2.copy()
+#     result[mask>0]=(0,0,0)
+#     img2_gray = rgb2gray(result)
+#     img2_gray = inpaint.inpaint_biharmonic(img2_gray,mask)
+#     ###
+
+#     # img2_gray = rgb2gray(img2)
+#     img2_gray = resize(img2_gray,(np.shape(img1)[0],np.shape(img1)[1]),anti_aliasing=True)
+
+#     # Annotate image with date/time
+#     x = 448
+#     y = 3
+#     h = np.shape(img1_dt)[0]
+#     w = np.shape(img1_dt)[1]
+
+#     if (img1_shape[0] == 1000) & (img1_shape[1] == 1000):
+#         img1[y:y+h,x:x+w,:]=img1_dt
+#     if (img1_shape[0] == 716) & (img1_shape[1] == 1078):
+#         img1[y:y+h,x:x+w,:]=img1_dt/255
+
+
+#     x = 448
+#     y = 14
+#     h = np.shape(img2_dt)[0]
+#     w = np.shape(img2_dt)[1]
+
+#     if (img1_shape[0] == 1000) & (img1_shape[1] == 1000):
+#         img1[y:y+h,x:x+w,:]=img2_dt
+#     if (img1_shape[0] == 716) & (img1_shape[1] == 1078):
+#         img1[y:y+h,x:x+w,:]=img2_dt/255
+
+#     bbox=dict(boxstyle="square", alpha=0.5, color='gray')
+#     fig3, ax = plt.subplots(figsize=[15,15])
+#     ax.set(xticks=[], yticks=[], title="Mumbai Doppler Radar Image Overlayed with Satellite Image")
+#     plt.imshow(img1)
+#     plt.annotate('Radar:    ',(406,9),size=11, color = 'k', fontweight='semibold', bbox=bbox)
+#     plt.annotate('Satellite:',(406,19),size=11, color = 'k', fontweight='semibold', bbox=bbox)
+#     plt.imshow(img2_gray, cmap='gray', alpha=img2_gray*0.8)
+
+#     st.pyplot(fig3)
+
+# except:
+#     st.text("Unable to load Radar & Satellite images!")
+
+
 try:
     # Doppler Radar Plot
-    url = 'https://mausam.imd.gov.in/Radar/caz_mum.gif'
+    url = 'https://mausam.imd.gov.in/Radar/ppz_vrv.gif'
     img1 = io.imread(url)
     img1_shape = np.shape(img1)
-    # print(np.shape(img1))
+    # Satellite image (water vapor)
     url = 'https://mausam.imd.gov.in/Satellite/3Dasiasec_wv.jpg'
     img2 = io.imread(url)
 
-    # Extract Date/Time
-    if (img1_shape[0] == 1000) & (img1_shape[1] == 1000):
-        img1 = img1[:,:,0:3]
-        img1_d = img1[164:184,772:885]
-        img1_t = img1[194:214,767:900]
-        img1_dt = np.hstack((img1_d,img1_t))
-        img1_dt = resize(img1_dt,(10,150),anti_aliasing=True)
-        img1_dt = img1_dt*255
-        img1_dt = img1_dt.astype(int)
+    # Crop Doppler Image
+    dpimg = img1[50:2450,50:2450,:]
 
-    if (img1_shape[0] == 716) & (img1_shape[1] == 1078):
-        img1 = img1[:,:,0:3]
-        img1_d = img1[16:36, 6:140]
-        img1_t = img1[16:36, 270:430]
-        img1_dt = np.hstack((img1_d,img1_t))
-        img1_dt = resize(img1_dt,(10,150),anti_aliasing=True)
-        img1_dt = img1_dt*255
-        img1_dt = img1_dt.astype(int)
-
-
-    img2_dt = img2[30:50,510:790,:]
-    img2_dt = resize(img2_dt,(10,150),anti_aliasing=True)
-    img2_dt = img2_dt*255
-    img2_dt = img2_dt.astype(int)
-
-    # Crop
-
-    if (img1_shape[0] == 1000) & (img1_shape[1] == 1000):
-        img1 = img1[302:900,102:700,0:3]
-
-    if (img1_shape[0] == 716) & (img1_shape[1] == 1078):
-        img1 = img1[174:698, 0:524, 0:3]
-        img1 = resize(img1,(598,598))
-
+    # Crop Satellite Image
     s = np.shape(img2)
     # print(s)
-    y1=int(np.ceil(s[1]/2.409));
-    y2=int(np.ceil(s[1]/2.023));
-    x1=int(np.ceil(s[0]/2.09));
-    x2=int(np.ceil(s[0]/1.82));
+    y1=int(np.ceil(s[1]/2.5374));
+    y2=int(np.ceil(s[1]/1.9299));
+    x1=int(np.ceil(s[0]/2.2053));
+    x2=int(np.ceil(s[0]/1.7615));
+    satimg = img2[x1:x2,y1:y2,:]
+    a=np.shape(satimg)
 
-    # print(x1,x2,y1,y2)
+    mask = np.load('mask.npy')
+    mask = resize(mask,(a[0],a[1]),anti_aliasing=True)
 
-    img2 = img2[x1:x2,y1:y2,:]
-    ###
-    img_hsv = rgb2hsv(img2)
+    img_hsv = rgb2hsv(satimg)
     h = img_hsv[:,:,0] #Hue
     s = img_hsv[:,:,1] #Sat
     v = img_hsv[:,:,2] #Val
 
     mask = np.load('mask.npy')
+    mask = resize(mask,(a[0],a[1]),anti_aliasing=True)
     element = np.ones([3,3],np.uint8)
     mask = dilation(mask,element)
-    masked = np.where(mask[...,None], img2, 0)
-
-    result = img2.copy()
+    result = satimg.copy()
+    result = resize(result,(a[0],a[1]),anti_aliasing=True)
     result[mask>0]=(0,0,0)
     img2_gray = rgb2gray(result)
     img2_gray = inpaint.inpaint_biharmonic(img2_gray,mask)
-    ###
+    img2_gray = resize(img2_gray,(2400,2400),anti_aliasing=True)
+    alpha = img2_gray
 
-    # img2_gray = rgb2gray(img2)
-    img2_gray = resize(img2_gray,(np.shape(img1)[0],np.shape(img1)[1]),anti_aliasing=True)
-
-    # Annotate image with date/time
-    x = 448
-    y = 3
-    h = np.shape(img1_dt)[0]
-    w = np.shape(img1_dt)[1]
-
-    if (img1_shape[0] == 1000) & (img1_shape[1] == 1000):
-        img1[y:y+h,x:x+w,:]=img1_dt
-    if (img1_shape[0] == 716) & (img1_shape[1] == 1078):
-        img1[y:y+h,x:x+w,:]=img1_dt/255
-
-
-    x = 448
-    y = 14
-    h = np.shape(img2_dt)[0]
-    w = np.shape(img2_dt)[1]
-
-    if (img1_shape[0] == 1000) & (img1_shape[1] == 1000):
-        img1[y:y+h,x:x+w,:]=img2_dt
-    if (img1_shape[0] == 716) & (img1_shape[1] == 1078):
-        img1[y:y+h,x:x+w,:]=img2_dt/255
-
+    #Plot
     bbox=dict(boxstyle="square", alpha=0.5, color='gray')
     fig3, ax = plt.subplots(figsize=[15,15])
     ax.set(xticks=[], yticks=[], title="Mumbai Doppler Radar Image Overlayed with Satellite Image")
-    plt.imshow(img1)
-    plt.annotate('Radar:    ',(406,9),size=11, color = 'k', fontweight='semibold', bbox=bbox)
-    plt.annotate('Satellite:',(406,19),size=11, color = 'k', fontweight='semibold', bbox=bbox)
-    plt.imshow(img2_gray, cmap='gray', alpha=img2_gray*0.8)
+    plt.imshow(dpimg)
+    plt.annotate('Radar:    ',(1500,60),size=11, color = 'k', fontweight='semibold', bbox=bbox)
+    plt.annotate('Satellite:',(1500,120),size=11, color = 'k', fontweight='semibold', bbox=bbox)
+    plt.imshow(img2_gray, alpha=alpha)
 
-    st.pyplot(fig3)
-
+     st.pyplot(fig3)
+        
 except:
     st.text("Unable to load Radar & Satellite images!")
+
+
 
 # Lake water levels:
 url = 'https://raw.githubusercontent.com/kaustuvchatterjee/lakes/main/lakelevels.csv'
