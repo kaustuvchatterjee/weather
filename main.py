@@ -379,7 +379,7 @@ try:
     plt.annotate('Satellite:',(1500,120),size=11, color = 'k', fontweight='semibold', bbox=bbox)
     plt.imshow(img2_gray, alpha=alpha)
 
-     st.pyplot(fig3)
+    st.pyplot(fig3)
         
 except:
     st.text("Unable to load Radar & Satellite images!")
