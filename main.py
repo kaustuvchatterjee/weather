@@ -375,7 +375,7 @@ try:
     sat_dt = img2[30:50,510:790,:]
 
     dp_dt = rgb2gray(dp_dt[:,:,0:3])
-    sat_dt = rgb2gray(sat_dt
+    sat_dt = rgb2gray(sat_dt)
 
     #Plot
     bbox=dict(boxstyle="square", alpha=0.5, color='gray')
@@ -383,8 +383,10 @@ try:
     ax.set(xticks=[], yticks=[], title="Mumbai Doppler Radar Image Overlayed with Satellite Image")
     plt.imshow(dpimg)
     plt.imshow(img2_gray, alpha=alpha)
-    plt.annotate('Radar:    ',(1500,60),size=11, color = 'k', fontweight='semibold', bbox=bbox)
-    plt.annotate('Satellite:',(1500,120),size=11, color = 'k', fontweight='semibold', bbox=bbox)
+
+    plt.annotate('Radar:    ',(1750,60),size=11, color = 'k', fontweight='semibold', bbox=bbox)
+    plt.annotate('Satellite:',(1750,120),size=11, color = 'k', fontweight='semibold', bbox=bbox) 
+
     dpin = ax.inset_axes([1950,0,420,100],transform=ax.transData)    # create new inset axes in data coordinates
     dpin.imshow(dp_dt, cmap='gray', alpha = 0.8)
     dpin.axis('off')
