@@ -18,6 +18,7 @@ from skimage.color import rgb2gray, rgb2hsv
 from skimage.transform import resize
 from skimage.morphology import dilation
 from skimage.restoration import inpaint
+from skimage import filters
 import pandas as pd
 import matplotlib.dates as mdates
 
@@ -330,7 +331,7 @@ st.pyplot(fig2, dpi=300)
 
 try:
     # Doppler Radar Plot
-    url = 'https://mausam.imd.gov.in/Radar/ppz_vrv.gif'
+    url = 'https://mausam.imd.gov.in/Radar/sri_vrv.gif'
     img1 = io.imread(url)
     img1_shape = np.shape(img1)
     # Satellite image (water vapor)
@@ -338,40 +339,41 @@ try:
     img2 = io.imread(url)
 
     # Crop Doppler Image
-    dpimg = img1[50:2450,50:2450,:]
+    dpimg = img1[30:2430,30:2430,:]
 
     # Crop Satellite Image
     s = np.shape(img2)
     # print(s)
-    y1=int(np.ceil(s[1]/2.5374));
-    y2=int(np.ceil(s[1]/1.9299));
-    x1=int(np.ceil(s[0]/2.2053));
-    x2=int(np.ceil(s[0]/1.7615));
+    y1 = 523
+    y2 = 625
+    x1 = 670
+    x2 = 770
     satimg = img2[x1:x2,y1:y2,:]
     a=np.shape(satimg)
 
     mask = np.load('mask.npy')
     mask = resize(mask,(a[0],a[1]),anti_aliasing=True)
 
-    img_hsv = rgb2hsv(satimg)
-    h = img_hsv[:,:,0] #Hue
-    s = img_hsv[:,:,1] #Sat
-    v = img_hsv[:,:,2] #Val
+#     img_hsv = rgb2hsv(satimg)
+#     h = img_hsv[:,:,0] #Hue
+#     s = img_hsv[:,:,1] #Sat
+#     v = img_hsv[:,:,2] #Val
     
    
     mask = np.load('mask.npy')
     mask = resize(mask,(a[0],a[1]),anti_aliasing=True)
-    element = np.ones([3,3],np.uint8)
-    mask = dilation(mask,element)
+#     element = np.ones([3,3],np.uint8)
+#     mask = dilation(mask,element)
     result = satimg.copy()
-    result = resize(result,(a[0],a[1]),anti_aliasing=True)
+#     result = resize(result,(a[0],a[1]),anti_aliasing=True)
     result[mask>0]=(0,0,0)
     img2_gray = rgb2gray(result)
     img2_gray = inpaint.inpaint_biharmonic(img2_gray,mask)
+    img2_gray = filters.gaussian(img2_gray,sigma=1)
     img2_gray = resize(img2_gray,(2400,2400),anti_aliasing=True)
     alpha = img2_gray
     
-    dp_dt = img1[400:445,2470:3073,:]
+    dp_dt = img1[386:424,2456:2984,:]
     sat_dt = img2[30:50,510:790,:]
 
     dp_dt = rgb2gray(dp_dt[:,:,0:3])
@@ -382,7 +384,7 @@ try:
     fig3, ax = plt.subplots(figsize=[15,15])
     ax.set(xticks=[], yticks=[], title="Mumbai Doppler Radar Image Overlayed with Satellite Image")
     plt.imshow(dpimg)
-    plt.imshow(img2_gray, alpha=alpha)
+    plt.imshow(img2_gray, cmap='Blues_r', alpha=alpha)
 
     plt.annotate('Radar:    ',(1750,60),size=11, color = 'k', fontweight='semibold', bbox=bbox)
     plt.annotate('Satellite:',(1750,120),size=11, color = 'k', fontweight='semibold', bbox=bbox) 
