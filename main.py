@@ -371,32 +371,28 @@ try:
     img2_gray = resize(img2_gray,(2400,2400),anti_aliasing=True)
     alpha = img2_gray
     
-    # Annotate image with date/time
-    x = 2000
-    y = 60
-    h = np.shape(img1_dt)[0]
-    w = np.shape(img1_dt)[1]
+    dp_dt = img1[400:445,2470:3073,:]
+    sat_dt = img2[30:50,510:790,:]
 
-    img1[y:y+h,x:x+w,:]=img1_dt
-
-
-    x = 2000
-    y = 120
-    h = np.shape(img2_dt)[0]
-    w = np.shape(img2_dt)[1]
-
-    img1[y:y+h,x:x+w,:]=img2_dt
-
+    dp_dt = rgb2gray(dp_dt[:,:,0:3])
+    sat_dt = rgb2gray(sat_dt
 
     #Plot
     bbox=dict(boxstyle="square", alpha=0.5, color='gray')
     fig3, ax = plt.subplots(figsize=[15,15])
     ax.set(xticks=[], yticks=[], title="Mumbai Doppler Radar Image Overlayed with Satellite Image")
     plt.imshow(dpimg)
+    plt.imshow(img2_gray, alpha=alpha)
     plt.annotate('Radar:    ',(1500,60),size=11, color = 'k', fontweight='semibold', bbox=bbox)
     plt.annotate('Satellite:',(1500,120),size=11, color = 'k', fontweight='semibold', bbox=bbox)
-    plt.imshow(img2_gray, alpha=alpha)
+    dpin = ax.inset_axes([1950,0,420,100],transform=ax.transData)    # create new inset axes in data coordinates
+    dpin.imshow(dp_dt, cmap='gray', alpha = 0.8)
+    dpin.axis('off')
 
+    satin = ax.inset_axes([1950,60,420,100],transform=ax.transData)    # create new inset axes in data coordinates
+    satin.imshow(sat_dt, cmap = 'gray', alpha = 0.8)
+    satin.axis('off')
+                      
     st.pyplot(fig3)
         
 except:
