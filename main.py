@@ -384,7 +384,7 @@ try:
     fig3, ax = plt.subplots(figsize=[15,15])
     ax.set(xticks=[], yticks=[], title="Mumbai Doppler Radar Image Overlayed with Satellite Image")
     plt.imshow(dpimg)
-    plt.imshow(img2_gray, cmap='Blues_r', alpha=alpha)
+    plt.imshow(img2_gray, cmap='Blues_r', alpha=alpha*0.8)
 
     plt.annotate('Radar:    ',(1750,60),size=11, color = 'k', fontweight='semibold', bbox=bbox)
     plt.annotate('Satellite:',(1750,120),size=11, color = 'k', fontweight='semibold', bbox=bbox) 
