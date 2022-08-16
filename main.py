@@ -138,6 +138,7 @@ plt.title ('Temperature')
 plt.grid()
 label=['Mean Temp','Heat Index']
 plt.legend(label)
+plt.ylim([0,50])
 ax=plt.gca()
 monthyearFmt = mdates.DateFormatter('%b %y')
 ax.xaxis.set_major_formatter(monthyearFmt)
