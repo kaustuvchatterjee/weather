@@ -1,8 +1,8 @@
-pandas==1.2.1
-requests==2.25.1
-matplotlib==3.4.2
+pandas
+requests
+matplotlib
 numpy
-beautifulsoup4==4.9.3
+beautifulsoup4
 scikit-image
-streamlit==0.83.0
-pillow==7.2.0
+streamlit
+pillow
